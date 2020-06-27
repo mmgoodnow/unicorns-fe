@@ -6,7 +6,7 @@ export const Signup: React.FunctionComponent = () => {
 	return (
 		<Form
 			action="http://localhost:9000/signup"
-			submissionProp={() => {
+			submissionAction={() => {
 				console.log("submitted");
 			}}
 			render={(handleChange: any) => (
@@ -23,7 +23,7 @@ export const Signup: React.FunctionComponent = () => {
 					<Field
 						id="password_confirmation"
 						type="password"
-						label="Confirmation Password:"
+						label="Confirm Password:"
 						handleChange={handleChange}
 					/>
 				</React.Fragment>

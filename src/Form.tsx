@@ -9,7 +9,7 @@ interface IFormProps {
 	 * This prop is used to render something or do some action once the form has
 	 * been submitted.
 	 */
-	submissionProp: any;
+	submissionAction: any;
 
 	render: (handleChange: any) => React.ReactNode;
 }
@@ -18,8 +18,6 @@ export interface IFormState {
 	values: IValues;
 
 	errors: IErrors;
-
-	submitSuccess?: boolean;
 }
 
 export default class Form extends React.Component<IFormProps, IFormState> {
@@ -48,14 +46,10 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 
 		if (this.validateForm()) {
 			const submitSuccess: boolean = await this.submitForm();
-			this.setState({ submitSuccess });
+			submitSuccess
+				? this.props.submissionAction()
+				: console.log("failed to submit");
 		}
-	};
-
-	handleChange = (id: string, e: React.FormEvent<HTMLFormElement>): void => {
-		this.setState({
-			values: { ...this.state.values, [id]: e.currentTarget.value },
-		});
 	};
 
 	// TODO:: Implement this
@@ -63,6 +57,7 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 		return true;
 	}
 
+	// TODO:: Going to need to fix hardcoded user here
 	private submitForm(): boolean {
 		let user = { user: { ...this.state.values } };
 		fetch(this.props.action, {
@@ -74,13 +69,28 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 			body: JSON.stringify(user),
 		})
 			.then((response: any) => response.json())
-			.then((data: any) => console.log(data))
-			.catch((error) => console.log("api errors:", error));
+			.then((data: any) => {
+				console.log("form submitted, return value", data);
+				if (data.errors) {
+					this.setState({ errors: data });
+					console.log(this.state.errors);
+				}
+			})
+			.catch((errors) => {
+				console.log("api errors:", errors);
+			});
 		return true;
 	}
 
+	handleChange = (id: string, e: React.FormEvent<HTMLFormElement>): void => {
+		this.setState({
+			values: { ...this.state.values, [id]: e.currentTarget.value },
+			errors: {},
+		});
+	};
+
 	render() {
-		const { submitSuccess, errors } = this.state;
+		const { errors } = this.state;
 
 		return (
 			<form onSubmit={this.handleSubmit} noValidate={true}>
@@ -95,13 +105,7 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 							Submit
 						</button>
 					</div>
-					{submitSuccess && this.props.submissionProp()}
-					{submitSuccess === false && !this.haveErrors(errors) && (
-						<div className="alert alert-danger" role="alert">
-							Sorry, an unexcpected error has occurred
-						</div>
-					)}
-					{submitSuccess === false && this.haveErrors(errors) && (
+					{this.haveErrors(errors) && (
 						<div className="alert alert-danger" role="alert">
 							Sorry, this form is invalid. Please review, adjust and try again
 						</div>

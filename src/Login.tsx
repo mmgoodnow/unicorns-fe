@@ -1,13 +1,20 @@
-import * as React from "react";
+import React from "react";
 import Form from "./Form";
 import { Field } from "./Field";
+import { useHistory } from "react-router-dom";
 
-export const Login: React.FunctionComponent = () => {
+interface ILoginProps {
+	login: any;
+}
+
+export const Login: React.FunctionComponent<ILoginProps> = ({ login }) => {
+	const history = useHistory();
 	return (
 		<Form
 			action="http://localhost:9000/login"
-			submissionProp={() => {
-				console.log("submitted");
+			submissionAction={() => {
+				login();
+				history.push("/");
 			}}
 			render={(handleChange: any) => (
 				<React.Fragment>
@@ -16,7 +23,7 @@ export const Login: React.FunctionComponent = () => {
 					<Field
 						id="password"
 						type="password"
-						label="Password (6 character minimum):"
+						label="Password:"
 						handleChange={handleChange}
 					/>
 				</React.Fragment>

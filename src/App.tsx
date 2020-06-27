@@ -25,6 +25,7 @@ class App extends React.Component<IAppProps, IAppState> {
 	}
 
 	handleLogin = (data: any): void => {
+		console.log("Data", data);
 		this.setState({ isLoggedIn: true, user: data.user });
 	};
 
@@ -38,11 +39,46 @@ class App extends React.Component<IAppProps, IAppState> {
 			credentials: "include",
 		})
 			.then((response: any) => {
-				if (response.data.logged_in) {
-					this.handleLogin(response);
-				} else {
-					this.handleLogout();
-				}
+				response.json().then((json: any) => {
+					console.log(json);
+					json.logged_in ? this.handleLogin(response) : this.handleLogout();
+				});
+			})
+			.catch((error) => console.log("api errors", error));
+	};
+
+	login = (): void => {
+		fetch("http://localhost:9000/login", {
+			method: "POST",
+			credentials: "include",
+		})
+			.then((response: any) => {
+				response.json().then((json: any) =>
+					json.logged_in
+						? () => {
+								this.handleLogin(json);
+								console.log("logged in");
+						  }
+						: console.log("login failed")
+				);
+			})
+			.catch((error) => console.log("api errors", error));
+	};
+
+	logout = (): void => {
+		fetch("http://localhost:9000/logout", {
+			method: "DELETE",
+			credentials: "include",
+		})
+			.then((response: any) => {
+				response.json().then((json: any) =>
+					json.status === "ok"
+						? () => {
+								this.handleLogout();
+								console.log("logged out");
+						  }
+						: console.log("log out failed")
+				);
 			})
 			.catch((error) => console.log("api errors", error));
 	};
@@ -50,13 +86,28 @@ class App extends React.Component<IAppProps, IAppState> {
 	render() {
 		return (
 			<div>
-				<BrowserRouter>
-					<Switch>
-						<Route exact path="/" component={Home} />
-						<Route exact path="/login" component={Login} />
-						<Route exact path="/signup" component={Signup} />
-					</Switch>
-				</BrowserRouter>
+				{!this.state.isLoggedIn && (
+					<div>
+						<BrowserRouter>
+							<Switch>
+								<Route exact path="/" component={Home} />
+								<Route
+									exact
+									path="/login"
+									render={(props) => <Login login={this.login.bind(this)} />}
+								/>
+								<Route exact path="/signup" component={Signup} />
+							</Switch>
+						</BrowserRouter>
+					</div>
+				)}
+				{this.state.isLoggedIn && (
+					<div>
+						You're logged in as
+						{JSON.stringify(this.state.user)}
+						<button onClick={this.logout}>Logout</button>
+					</div>
+				)}
 			</div>
 		);
 	}
