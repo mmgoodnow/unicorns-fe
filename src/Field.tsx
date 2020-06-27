@@ -1,5 +1,4 @@
 import * as React from "react";
-import IErrors from "./IErrors";
 
 type Editor = "textbox" | "multilinetextbox" | "dropdown";
 
