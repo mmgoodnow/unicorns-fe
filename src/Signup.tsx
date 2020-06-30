@@ -1,13 +1,15 @@
 import * as React from "react";
 import Form from "./Form";
 import { Field } from "./Field";
+import { useHistory } from "react-router-dom";
 
 export const Signup: React.FunctionComponent = () => {
+	const history = useHistory();
 	return (
 		<Form
 			action="http://localhost:9000/signup"
-			submissionAction={() => {
-				console.log("submitted");
+			submissionAction={(data: any) => {
+				history.push("/");
 			}}
 			render={(handleChange: any) => (
 				<React.Fragment>

@@ -45,10 +45,8 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 		e.preventDefault();
 
 		if (this.validateForm()) {
-			const submitSuccess: boolean = await this.submitForm();
-			submitSuccess
-				? this.props.submissionAction()
-				: console.log("failed to submit");
+			const response: any = await this.submitForm();
+			this.props.submissionAction(response);
 		}
 	};
 
@@ -58,9 +56,10 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 	}
 
 	// TODO:: Going to need to fix hardcoded user here
-	private submitForm(): boolean {
+	private submitForm(): Promise<any> {
 		let user = { user: { ...this.state.values } };
-		fetch(this.props.action, {
+		let rv = { user: {} };
+		return fetch(this.props.action, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
@@ -70,16 +69,12 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 		})
 			.then((response: any) => response.json())
 			.then((data: any) => {
-				console.log("form submitted, return value", data);
-				if (data.errors) {
-					this.setState({ errors: data });
-					console.log(this.state.errors);
-				}
+				data.errors ? this.setState({ errors: data.errors }) : (rv = data);
+				return rv;
 			})
 			.catch((errors) => {
 				console.log("api errors:", errors);
 			});
-		return true;
 	}
 
 	handleChange = (id: string, e: React.FormEvent<HTMLFormElement>): void => {
@@ -107,7 +102,8 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 					</div>
 					{this.haveErrors(errors) && (
 						<div className="alert alert-danger" role="alert">
-							Sorry, this form is invalid. Please review, adjust and try again
+							Sorry, this form is invalid. Please review, adjust and try again:{" "}
+							{errors}
 						</div>
 					)}
 				</div>

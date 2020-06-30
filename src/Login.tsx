@@ -4,16 +4,18 @@ import { Field } from "./Field";
 import { useHistory } from "react-router-dom";
 
 interface ILoginProps {
-	login: any;
+	loginStatus: any;
 }
 
-export const Login: React.FunctionComponent<ILoginProps> = ({ login }) => {
+export const Login: React.FunctionComponent<ILoginProps> = ({
+	loginStatus,
+}) => {
 	const history = useHistory();
 	return (
 		<Form
 			action="http://localhost:9000/login"
-			submissionAction={() => {
-				login();
+			submissionAction={(data: any) => {
+				loginStatus(data);
 				history.push("/");
 			}}
 			render={(handleChange: any) => (
