@@ -6,7 +6,7 @@ interface IFormProps {
 	action: string;
 
 	/*
-	 * This prop is used to render something or do some action once the form has
+	 * This prop is used to some action once the form has
 	 * been submitted.
 	 */
 	submissionAction: any;
