@@ -1,22 +1,18 @@
 import * as React from "react";
-import IValues from "./IValues";
-import IErrors from "./IErrors";
+import { IValues, IErrors } from "./types";
 
 interface IFormProps {
 	action: string;
-
 	/*
 	 * This prop is used to some action once the form has
 	 * been submitted.
 	 */
 	submissionAction: any;
-
 	render: (handleChange: any) => React.ReactNode;
 }
 
 export interface IFormState {
 	values: IValues;
-
 	errors: IErrors;
 }
 
