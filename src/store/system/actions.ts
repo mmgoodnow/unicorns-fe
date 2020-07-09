@@ -1,9 +1,9 @@
-import { LOG_IN, LOG_OUT, LoginState, RegistrationActionTypes } from "./types";
+import { LOG_IN, LOG_OUT, SystemState, RegistrationActionTypes } from "./types";
 
-export function login(loginState: LoginState): RegistrationActionTypes {
+export function login(systemState: SystemState): RegistrationActionTypes {
 	return {
 		type: LOG_IN,
-		payload: loginState,
+		payload: systemState,
 	};
 }
 
