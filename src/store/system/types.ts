@@ -1,14 +1,14 @@
 export const LOG_IN = "LOG_IN";
 export const LOG_OUT = "LOG_OUT";
 
-export interface LoginState {
+export interface SystemState {
 	isLoggedIn: boolean;
 	user: any;
 }
 
 interface LoginAction {
 	type: typeof LOG_IN;
-	payload: LoginState;
+	payload: SystemState;
 }
 
 interface LogoutAction {

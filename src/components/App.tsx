@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Home from "./home/Home";
 import { Login } from "./login/Login";
 import { Signup } from "./signup/Signup";
-import { LoginState } from "../store/system/types";
+import { SystemState } from "../store/system/types";
 import { login, logout } from "../store/system/actions";
 import { connect, ConnectedProps } from "react-redux";
 
@@ -14,7 +14,7 @@ const loginDispatch = {
 	logout,
 };
 
-const loginState = (state: LoginState) => ({
+const loginState = (state: SystemState) => ({
 	isLoggedIn: state.isLoggedIn,
 	user: state.user,
 });
@@ -23,7 +23,7 @@ const connector = connect(loginState, loginDispatch);
 
 type PropsFromRedux = ConnectedProps<typeof connector>;
 
-class App extends React.Component<PropsFromRedux, LoginState> {
+class App extends React.Component<PropsFromRedux, SystemState> {
 	componentDidMount() {
 		this.loginStatus();
 	}
@@ -36,7 +36,7 @@ class App extends React.Component<PropsFromRedux, LoginState> {
 			.then((response: any) => {
 				response.json().then((json: any) => {
 					if (json.logged_in) {
-						let loginInfo: LoginState = {
+						let loginInfo: SystemState = {
 							isLoggedIn: json.logged_in,
 							user: json.user,
 						};
@@ -51,7 +51,7 @@ class App extends React.Component<PropsFromRedux, LoginState> {
 
 	handleLogin = (data: any): void => {
 		if (data.logged_in) {
-			let loginInfo: LoginState = {
+			let loginInfo: SystemState = {
 				isLoggedIn: data.logged_in,
 				user: data.user,
 			};

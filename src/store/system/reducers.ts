@@ -1,6 +1,6 @@
-import { LOG_IN, LOG_OUT, LoginState, RegistrationActionTypes } from "./types";
+import { LOG_IN, LOG_OUT, SystemState, RegistrationActionTypes } from "./types";
 
-const initialState: LoginState = {
+const initialState: SystemState = {
 	isLoggedIn: false,
 	user: {},
 };
@@ -8,7 +8,7 @@ const initialState: LoginState = {
 export function systemReducer(
 	state = initialState,
 	action: RegistrationActionTypes
-): LoginState {
+): SystemState {
 	switch (action.type) {
 		case LOG_IN:
 			return action.payload;
