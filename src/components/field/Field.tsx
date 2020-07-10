@@ -40,12 +40,9 @@ export const Field: React.FunctionComponent<IFieldProps> = ({
 					type={type}
 					placeholder={placeholder}
 					value={value}
-					onChange={(e: React.FormEvent<HTMLInputElement>) => {
-						handleChange(id, e);
-					}}
-					onBlur={(e: React.FormEvent<HTMLInputElement>) => {
-						handleChange(id, e);
-					}}
+					onChange={(e: React.FormEvent<HTMLInputElement>) =>
+						handleChange(id, e)
+					}
 					className="form-control"
 				/>
 			)}
@@ -55,12 +52,9 @@ export const Field: React.FunctionComponent<IFieldProps> = ({
 					id={id}
 					placeholder={placeholder}
 					value={value}
-					onChange={(e: React.FormEvent<HTMLTextAreaElement>) => {
-						handleChange(id, e);
-					}}
-					onBlur={(e: React.FormEvent<HTMLTextAreaElement>) => {
-						handleChange(id, e);
-					}}
+					onChange={(e: React.FormEvent<HTMLTextAreaElement>) =>
+						handleChange(id, e)
+					}
 					className="form-control"
 				/>
 			)}
@@ -71,9 +65,6 @@ export const Field: React.FunctionComponent<IFieldProps> = ({
 					value={value}
 					placeholder={placeholder}
 					onChange={(e: React.FormEvent<HTMLSelectElement>) => {
-						handleChange(id, e);
-					}}
-					onBlur={(e: React.FormEvent<HTMLSelectElement>) => {
 						handleChange(id, e);
 					}}
 					className="form-control"
