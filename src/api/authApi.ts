@@ -1,4 +1,4 @@
-import { post } from "./http";
+import { post, get } from "./http";
 import { LoginCredentials, SignupCredentials } from "../models/auth";
 
 export function login(user: LoginCredentials) {
@@ -11,4 +11,8 @@ export function logout() {
 
 export function signup(user: SignupCredentials) {
 	return post("/signup", { user });
+}
+
+export function getCurrentUser() {
+	return get("/logged_in");
 }
