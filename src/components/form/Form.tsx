@@ -1,13 +1,13 @@
 import * as React from "react";
-import { IValues, IErrors } from "./types";
+import { IErrors, IValues } from "./types";
 
 interface IFormProps {
-	action: string;
+	onSubmit: (data: any) => Promise<any>;
 	/*
 	 * This prop is used to some action once the form has
-	 * been submitted.
+	 * been submitted successfully.
 	 */
-	submissionAction: any;
+	onSuccess: (data: any) => any;
 	render: (handleChange: any) => React.ReactNode;
 }
 
@@ -28,49 +28,36 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 		};
 	}
 
-	private haveErrors(errors: IErrors) {
+	private hasErrors() {
+		const { errors } = this.state;
 		for (let key in errors) {
 			if (errors[key].length > 0) return true;
 		}
 		return false;
 	}
 
-	private handleSubmit = async (
-		e: React.FormEvent<HTMLFormElement>
-	): Promise<void> => {
+	private handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
 		e.preventDefault();
+		if (!this.validateForm()) return;
 
-		if (this.validateForm()) {
-			const response: any = await this.submitForm();
-			this.props.submissionAction(response);
-		}
+		this.props
+			.onSubmit(this.state.values)
+			.then((data: any) => {
+				if (data.errors) {
+					this.setState({ errors: data.errors });
+					return;
+				}
+				return data;
+			})
+			.then(this.props.onSuccess)
+			.catch((error: any) => {
+				console.error("api errors:", error);
+			});
 	};
 
 	// TODO:: Implement this
 	private validateForm(): boolean {
 		return true;
-	}
-
-	// TODO:: Going to need to fix hardcoded user here
-	private submitForm(): Promise<any> {
-		let user = { user: { ...this.state.values } };
-		let rv = { user: {} };
-		return fetch(this.props.action, {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			credentials: "include",
-			body: JSON.stringify(user),
-		})
-			.then((response: any) => response.json())
-			.then((data: any) => {
-				data.errors ? this.setState({ errors: data.errors }) : (rv = data);
-				return rv;
-			})
-			.catch((errors) => {
-				console.log("api errors:", errors);
-			});
 	}
 
 	handleChange = (id: string, e: React.FormEvent<HTMLFormElement>): void => {
@@ -91,12 +78,12 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 						<button
 							type="submit"
 							className="btn btn-primary"
-							disabled={this.haveErrors(errors)}
+							disabled={this.hasErrors()}
 						>
 							Submit
 						</button>
 					</div>
-					{this.haveErrors(errors) && (
+					{this.hasErrors() && (
 						<div className="alert alert-danger" role="alert">
 							Sorry, this form is invalid. Please review, adjust and try again:
 							{errors}

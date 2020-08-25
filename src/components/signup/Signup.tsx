@@ -1,16 +1,18 @@
-import * as React from "react";
+import React, { useCallback } from "react";
 import Form from "../form/Form";
 import { Field } from "../field/Field";
 import { useHistory } from "react-router-dom";
+import { signup } from "../../api/authApi";
 
 export const Signup: React.FunctionComponent = () => {
 	const history = useHistory();
+	const onSuccess = useCallback(() => {
+		history.push("/");
+	}, [history]);
 	return (
 		<Form
-			action="http://localhost:9000/signup"
-			submissionAction={(data: any) => {
-				history.push("/");
-			}}
+			onSubmit={signup}
+			onSuccess={onSuccess}
 			render={(handleChange: any) => (
 				<React.Fragment>
 					<h1>Sign Up</h1>

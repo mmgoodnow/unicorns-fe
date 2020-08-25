@@ -2,7 +2,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./components/App";
+import { App } from "./components/App";
 import configureAppStore from "./store";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";

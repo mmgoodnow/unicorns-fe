@@ -1,11 +1,12 @@
 import React from "react";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Home from "./home/Home";
+import { Home } from "./home/Home";
 import { Login } from "./login/Login";
 import { Signup } from "./signup/Signup";
 import { PrivateRoute } from "./pages/PrivateRoute";
-import Lobby from "./pages/Lobby";
-export default function App() {
+import { Lobby } from "./pages/Lobby";
+
+export function App() {
 	return (
 		<BrowserRouter>
 			<Switch>

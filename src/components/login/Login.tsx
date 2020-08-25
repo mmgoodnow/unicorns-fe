@@ -1,23 +1,25 @@
-import React from "react";
+import React, { useCallback } from "react";
 import Form from "../form/Form";
 import { Field } from "../field/Field";
 import { useHistory } from "react-router-dom";
+import { login } from "../../api/authApi";
+import { useDispatch } from "react-redux";
+import { loginSuccess } from "../../store/system/actions";
 
-interface ILoginProps {
-	loginStatus: any;
-}
-
-export const Login: React.FunctionComponent<ILoginProps> = ({
-	loginStatus,
-}) => {
+export function Login() {
 	const history = useHistory();
+	const dispatch = useDispatch();
+	const onSuccess = useCallback(
+		({ user }) => {
+			dispatch(loginSuccess(user));
+			history.push("/lobby");
+		},
+		[dispatch, history]
+	);
 	return (
 		<Form
-			action="http://localhost:9000/login"
-			submissionAction={(data: any) => {
-				loginStatus(data);
-				history.push("/");
-			}}
+			onSubmit={login}
+			onSuccess={onSuccess}
 			render={(handleChange: any) => (
 				<React.Fragment>
 					<h1>Log In</h1>
@@ -32,4 +34,4 @@ export const Login: React.FunctionComponent<ILoginProps> = ({
 			)}
 		/>
 	);
-};
+}

@@ -1,6 +1,6 @@
 import {
-	LOG_OUT_SUCCESS,
-	LOG_IN_SUCCESS,
+	LOG_OUT,
+	LOG_IN,
 	SystemAction,
 	AUTH_STARTED,
 	LoginAction,
@@ -28,14 +28,14 @@ export function systemReducer(
 				...state,
 				isLoading: true,
 			};
-		case LOG_OUT_SUCCESS:
+		case LOG_OUT:
 			return {
 				...state,
 				isLoading: false,
 				isLoggedIn: false,
 				user: null,
 			};
-		case LOG_IN_SUCCESS:
+		case LOG_IN:
 			const { user } = action as LoginAction;
 			return {
 				...state,

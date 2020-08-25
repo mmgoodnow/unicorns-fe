@@ -1,8 +1,8 @@
 import {
 	AUTH_STARTED,
 	GenericAction,
-	LOG_IN_SUCCESS,
-	LOG_OUT_SUCCESS,
+	LOG_IN,
+	LOG_OUT,
 	LoginAction,
 } from "../ActionTypes";
 import { LoginCredentials } from "../../models/auth";
@@ -14,11 +14,11 @@ import {
 import { AppThunk } from "../index";
 
 function logoutSuccess(): GenericAction {
-	return { type: LOG_OUT_SUCCESS };
+	return { type: LOG_OUT };
 }
 
-function loginSuccess(user: any): LoginAction {
-	return { type: LOG_IN_SUCCESS, user };
+export function loginSuccess(user: any): LoginAction {
+	return { type: LOG_IN, user };
 }
 
 function authStarted(): GenericAction {
@@ -44,6 +44,12 @@ export function logout(): AppThunk {
 export function authenticate(): AppThunk {
 	return (dispatch) => {
 		dispatch(authStarted());
-		getCurrentUser().then(({ user }) => dispatch(loginSuccess(user)));
+		getCurrentUser().then(({ logged_in, user }) => {
+			if (!logged_in) {
+				dispatch(logoutSuccess());
+				return;
+			}
+			dispatch(loginSuccess(user));
+		});
 	};
 }

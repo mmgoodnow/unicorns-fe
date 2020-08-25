@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { logout } from "../../store/system/actions";
 import { useDispatch } from "react-redux";
 
-export default function Lobby() {
+export function Lobby() {
 	const dispatch = useDispatch();
 	const handleLogout = useCallback(() => {
 		dispatch(logout());
