@@ -29,7 +29,7 @@ export function login(credentials: LoginCredentials): AppThunk {
 	return (dispatch) => {
 		loginRequest(credentials)
 			.then(({ user }) => dispatch(loginSuccess(user)))
-			.catch((error) => console.log(error));
+			.catch((error) => console.error(error));
 	};
 }
 
@@ -37,7 +37,7 @@ export function logout(): AppThunk {
 	return (dispatch) => {
 		logoutRequest()
 			.then(() => dispatch(logoutSuccess()))
-			.catch((error) => console.log(error));
+			.catch((error) => console.error(error));
 	};
 }
 
