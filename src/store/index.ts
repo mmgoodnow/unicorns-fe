@@ -5,7 +5,7 @@ import {
 	getDefaultMiddleware,
 	combineReducers,
 } from "@reduxjs/toolkit";
-import { systemReducer } from "./system/reducers";
+import { systemReducer } from "./system/reducer";
 
 const rootReducer = combineReducers({ system: systemReducer });
 

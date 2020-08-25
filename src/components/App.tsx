@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Home from "./home/Home";
 import { Login } from "./login/Login";
 import { Signup } from "./signup/Signup";
-import { SystemState } from "../store/system/types";
+import { SystemState } from "../store/ActionTypes";
 import { login, logout } from "../store/system/actions";
 import { connect, ConnectedProps } from "react-redux";
 
