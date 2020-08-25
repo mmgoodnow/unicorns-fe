@@ -13,7 +13,7 @@ function parseResponse(response: Response) {
 
 export function get(path: string, options: RequestInit = {}) {
 	const mergedOptions: RequestInit = {
-		credentials: "same-origin",
+		credentials: "include",
 		...options,
 	};
 	return fetch(API_URL + path, mergedOptions).then(parseResponse);
@@ -25,7 +25,7 @@ export function post(
 	options: RequestInit = {}
 ) {
 	const mergedOptions: RequestInit = {
-		credentials: "same-origin",
+		credentials: "include",
 		method: "POST",
 		...options,
 		headers: {
@@ -33,6 +33,15 @@ export function post(
 			...options.headers,
 		},
 		body: JSON.stringify(data),
+	};
+	return fetch(API_URL + path, mergedOptions).then(parseResponse);
+}
+
+export function del(path: string, options: RequestInit = {}) {
+	const mergedOptions: RequestInit = {
+		credentials: "include",
+		method: "DELETE",
+		...options,
 	};
 	return fetch(API_URL + path, mergedOptions).then(parseResponse);
 }
