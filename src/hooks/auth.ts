@@ -10,8 +10,9 @@ export function useAuth() {
 	useEffect(() => {
 		if (!isLoading && isLoggedIn === undefined) {
 			dispatch(authenticate());
+			console.log("dispatching");
 		}
 	}, [dispatch, isLoading, isLoggedIn]);
-
+	if (isLoggedIn === undefined) return { isLoading: true };
 	return { isLoggedIn, isLoading };
 }
