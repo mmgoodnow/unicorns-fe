@@ -13,8 +13,8 @@ export interface SystemState {
 }
 
 const initialState: SystemState = {
-	isLoggedIn: false,
-	user: {},
+	isLoggedIn: undefined,
+	user: null,
 	isLoading: false,
 };
 
@@ -29,7 +29,12 @@ export function systemReducer(
 				isLoading: true,
 			};
 		case LOG_OUT_SUCCESS:
-			return initialState;
+			return {
+				...state,
+				isLoading: false,
+				isLoggedIn: false,
+				user: null,
+			};
 		case LOG_IN_SUCCESS:
 			const { user } = action as LoginAction;
 			return {

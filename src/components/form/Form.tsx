@@ -98,7 +98,7 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 					</div>
 					{this.haveErrors(errors) && (
 						<div className="alert alert-danger" role="alert">
-							Sorry, this form is invalid. Please review, adjust and try again:{" "}
+							Sorry, this form is invalid. Please review, adjust and try again:
 							{errors}
 						</div>
 					)}
