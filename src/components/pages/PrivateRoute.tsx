@@ -8,7 +8,7 @@ export function PrivateRoute(props: RouteProps) {
 	if (isLoading) return <h3>Loading…</h3>;
 
 	if (!isLoggedIn) {
-		let render: RouteProps["render"] = ({ location }) => (
+		const render: RouteProps["render"] = ({ location }) => (
 			<Redirect to={{ pathname: "/login", state: { from: location } }} />
 		);
 		return <Route {...rest} render={render} />;
