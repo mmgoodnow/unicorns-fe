@@ -1,5 +1,8 @@
 import * as React from "react";
 import { IErrors, IValues } from "./types";
+import { ReactNode } from "react";
+import { FormContext } from "./FormContext";
+import { FieldEvent } from "./Field";
 
 interface IFormProps {
 	onSubmit: (data: any) => Promise<any>;
@@ -8,7 +11,7 @@ interface IFormProps {
 	 * been submitted successfully.
 	 */
 	onSuccess: (data: any) => any;
-	render: (handleChange: any) => React.ReactNode;
+	children: ReactNode;
 }
 
 export interface IFormState {
@@ -60,7 +63,7 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 		return true;
 	}
 
-	handleChange = (id: string, e: React.FormEvent<HTMLFormElement>): void => {
+	handleChange = (id: string, e: FieldEvent): void => {
 		this.setState({
 			values: { ...this.state.values, [id]: e.currentTarget.value },
 			errors: {},
@@ -69,11 +72,12 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 
 	render() {
 		const { errors } = this.state;
-
 		return (
 			<form onSubmit={this.handleSubmit} noValidate={true}>
 				<div className="container">
-					{this.props.render(this.handleChange.bind(this))}
+					<FormContext.Provider value={{ onChange: this.handleChange }}>
+						{this.props.children}
+					</FormContext.Provider>
 					<div className="form-group">
 						<button
 							type="submit"

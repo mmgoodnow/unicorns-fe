@@ -5,10 +5,11 @@ import {
 	AUTH_STARTED,
 	LoginAction,
 } from "../ActionTypes";
+import { User } from "../../models/auth";
 
 export interface SystemState {
 	isLoggedIn: boolean | undefined;
-	user: any;
+	user: User | null;
 	isLoading: boolean;
 }
 
