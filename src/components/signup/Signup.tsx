@@ -8,7 +8,7 @@ import { Centered } from "../pages/Centered";
 export const Signup: React.FunctionComponent = () => {
 	const history = useHistory();
 	const onSuccess = useCallback(() => {
-		history.push("/");
+		history.push("/login");
 	}, [history]);
 	return (
 		<Centered style={{ width: "300px", minWidth: "200px" }}>
