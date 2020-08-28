@@ -1,21 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Centered } from "../pages/Centered";
 
 export const Home = () => (
-	<div>
-		<div className="text-center">
-			<h2>Welcome to Unicorns!</h2>
-		</div>
-		<div className="container">
-			<div className="col-6 justify-content-center mx-auto align-middle">
-				<Link className="btn btn-block btn-primary" to="/login">
-					Log In
-				</Link>
-				<br />
-				<Link className="btn btn-block btn-success" to="/signup">
-					Sign Up
-				</Link>
-			</div>
-		</div>
-	</div>
+	<Centered>
+		<h1 className="ostrich title text-center">Unstable Unicorns</h1>
+		<br />
+		<Link className="btn btn-block btn-magical-unicorn text-light" to="/login">
+			Log In
+		</Link>
+		<Link className="btn btn-block btn-basic-unicorn text-light" to="/signup">
+			Sign Up
+		</Link>
+	</Centered>
 );

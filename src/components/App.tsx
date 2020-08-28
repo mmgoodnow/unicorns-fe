@@ -5,16 +5,24 @@ import { Login } from "./login/Login";
 import { Signup } from "./signup/Signup";
 import { PrivateRoute } from "./pages/PrivateRoute";
 import { Lobby } from "./pages/Lobby";
+import { Play } from "./pages/Play";
+import { Account } from "./pages/Account";
 
 export function App() {
 	return (
 		<BrowserRouter>
-			<Switch>
-				<Route exact path="/" component={Home} />
-				<Route exact path="/login" component={Login} />
-				<Route exact path="/signup" component={Signup} />
-				<PrivateRoute exact path="/lobby" component={Lobby} />
-			</Switch>
+			<div className="bg-light w-100 h-100">
+				<div className="container overflow-scroll w-100 h-100">
+					<Switch>
+						<Route exact path="/" component={Home} />
+						<Route exact path="/login" component={Login} />
+						<Route exact path="/signup" component={Signup} />
+						<PrivateRoute exact path="/lobby" component={Lobby} />
+						<PrivateRoute exact path="/play" component={Play} />
+						<PrivateRoute exact path="/account" component={Account} />
+					</Switch>
+				</div>
+			</div>
 		</BrowserRouter>
 	);
 }

@@ -2,5 +2,8 @@ export interface IValues {
 	[key: string]: string;
 }
 export interface IErrors {
-	[key: string]: string;
+	root: string[];
+	fields: {
+		[key: string]: string;
+	};
 }

@@ -18,13 +18,13 @@ export interface IFormState {
 	values: IValues;
 	errors: IErrors;
 }
+const EMPTY_ERRORS = { root: [], fields: {} };
 
 export default class Form extends React.Component<IFormProps, IFormState> {
 	constructor(props: IFormProps) {
 		super(props);
-
 		const values: IValues = {};
-		const errors: IErrors = {};
+		const errors: IErrors = EMPTY_ERRORS;
 		this.state = {
 			values,
 			errors,
@@ -32,9 +32,12 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 	}
 
 	private hasErrors() {
-		const { errors } = this.state;
-		for (let key in errors) {
-			if (errors[key].length > 0) return true;
+		const {
+			errors: { root, fields },
+		} = this.state;
+		if (root.length) return true;
+		for (let key in fields) {
+			if (fields[key]) return true;
 		}
 		return false;
 	}
@@ -47,7 +50,9 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 			.onSubmit(this.state.values)
 			.then((data: any) => {
 				if (data.errors) {
-					this.setState({ errors: data.errors });
+					this.setState((state) => ({
+						errors: { ...state.errors, root: data.errors },
+					}));
 					return;
 				}
 				return data;
@@ -60,39 +65,43 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 
 	// TODO:: Implement this
 	private validateForm(): boolean {
-		return true;
+		return !this.hasErrors();
 	}
 
 	handleChange = (id: string, e: FieldEvent): void => {
 		this.setState({
 			values: { ...this.state.values, [id]: e.currentTarget.value },
-			errors: {},
+			errors: EMPTY_ERRORS,
 		});
 	};
 
 	render() {
-		const { errors } = this.state;
+		const {
+			errors: { root: rootErrors },
+		} = this.state;
 		return (
 			<form onSubmit={this.handleSubmit} noValidate={true}>
-				<div className="container">
-					<FormContext.Provider value={{ onChange: this.handleChange }}>
-						{this.props.children}
-					</FormContext.Provider>
-					<div className="form-group">
-						<button
-							type="submit"
-							className="btn btn-primary"
-							disabled={this.hasErrors()}
-						>
-							Submit
-						</button>
+				{this.hasErrors() && (
+					<div className="alert alert-instant" role="alert">
+						Sorry, this form is invalid. Please review, adjust and try again:
+						<ul>
+							{rootErrors.map((err) => (
+								<li>{err}</li>
+							))}
+						</ul>
 					</div>
-					{this.hasErrors() && (
-						<div className="alert alert-danger" role="alert">
-							Sorry, this form is invalid. Please review, adjust and try again:
-							{errors}
-						</div>
-					)}
+				)}
+				<FormContext.Provider value={{ onChange: this.handleChange }}>
+					{this.props.children}
+				</FormContext.Provider>
+				<div className="form-group">
+					<button
+						type="submit"
+						className="btn btn-basic-unicorn btn-block"
+						disabled={this.hasErrors()}
+					>
+						Submit
+					</button>
 				</div>
 			</form>
 		);
