@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import Form from "../form/Form";
 import { Field } from "../form/Field";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { signup } from "../../api/authApi";
 import { Centered } from "../pages/Centered";
 
@@ -23,6 +23,14 @@ export const Signup: React.FunctionComponent = () => {
 					label="Confirm Password:"
 				/>
 			</Form>
+			<div className="d-flex flex-row align-items-start mt-2">
+				<Link className="btn w-100 btn-outline-basic-unicorn mr-2" to="/">
+					Home
+				</Link>
+				<Link className="btn w-100 btn-outline-magical-unicorn" to="/login">
+					Log in
+				</Link>
+			</div>
 		</Centered>
 	);
 };

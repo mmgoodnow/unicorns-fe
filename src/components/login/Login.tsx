@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import Form from "../form/Form";
 import { Field } from "../form/Field";
-import { useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { login } from "../../api/authApi";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../store/system/actions";
@@ -26,6 +26,14 @@ export function Login() {
 				<Field id="email" label="Email:" />
 				<Field id="password" type="password" label="Password:" />
 			</Form>
+			<div className="d-flex flex-row mt-2">
+				<Link className="btn w-100 btn-outline-basic-unicorn mr-2" to="/">
+					Home
+				</Link>
+				<Link className="btn w-100 btn-outline-magical-unicorn" to="/signup">
+					Sign up
+				</Link>
+			</div>
 		</Centered>
 	);
 }
