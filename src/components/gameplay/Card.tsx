@@ -4,6 +4,6 @@ import { CardData } from "../../models/cards/CardData";
 interface CardProps {
 	card: CardData;
 }
-export const Card: React.FC<CardProps> = ({ card }) => {
+export function Card({ card }: CardProps) {
 	return <img src={card.url} alt={card.description} width="300px" />;
-};
+}

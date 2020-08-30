@@ -7,11 +7,13 @@ import { PrivateRoute } from "./pages/PrivateRoute";
 import { Lobby } from "./pages/Lobby";
 import { Play } from "./pages/Play";
 import { Account } from "./pages/Account";
+import { Navbar } from "./pages/Navbar";
 
 export function App() {
 	return (
 		<BrowserRouter>
 			<div className="bg-light w-100 h-100">
+				<Navbar />
 				<div
 					className="container w-100 h-100"
 					style={{ overflowY: "scroll", wordWrap: "break-word" }}
