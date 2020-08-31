@@ -5,5 +5,12 @@ interface CardProps {
 	card: CardData;
 }
 export function Card({ card }: CardProps) {
-	return <img src={card.url} alt={card.description} width="300px" />;
+	return (
+		<img
+			src={card.url}
+			alt={card.description}
+			width="300px"
+			className="rounded-lg"
+		/>
+	);
 }

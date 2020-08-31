@@ -15,7 +15,7 @@ export function App() {
 			<div className="bg-light w-100 h-100 d-flex flex-column">
 				<Navbar />
 				<div
-					className="container w-100 h-100"
+					className="container-fluid w-100 h-100"
 					style={{ overflowY: "scroll", wordWrap: "break-word" }}
 				>
 					<Switch>
