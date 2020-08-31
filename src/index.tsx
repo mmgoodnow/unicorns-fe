@@ -1,7 +1,6 @@
-import "bootstrap/dist/css/bootstrap.css";
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
+import "./index.scss";
 import { App } from "./components/App";
 import configureAppStore from "./store";
 import { Provider } from "react-redux";

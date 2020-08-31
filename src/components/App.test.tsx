@@ -12,5 +12,5 @@ test("renders Welcome to Unicorns", () => {
 		</Provider>
 	);
 
-	expect(getByText("Welcome to Unicorns!")).toBeInTheDocument();
+	expect(getByText("Unstable Unicorns")).toBeInTheDocument();
 });

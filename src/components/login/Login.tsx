@@ -6,6 +6,7 @@ import { login } from "../../api/authApi";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../store/system/actions";
 import { User } from "../../models/auth";
+import { Centered } from "../pages/Centered";
 
 export function Login() {
 	const history = useHistory();
@@ -18,10 +19,12 @@ export function Login() {
 		[dispatch, history]
 	);
 	return (
-		<Form onSubmit={login} onSuccess={onSuccess}>
-			<h1>Log In</h1>
-			<Field id="email" label="Email:" />
-			<Field id="password" type="password" label="Password:" />
-		</Form>
+		<Centered style={{ width: "300px", minWidth: "200px" }}>
+			<h1 className="text-center ostrich">Log In</h1>
+			<Form onSubmit={login} onSuccess={onSuccess}>
+				<Field id="email" label="Email:" />
+				<Field id="password" type="password" label="Password:" />
+			</Form>
+		</Centered>
 	);
 }
