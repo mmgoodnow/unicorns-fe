@@ -12,7 +12,10 @@ export function App() {
 	return (
 		<BrowserRouter>
 			<div className="bg-light w-100 h-100">
-				<div className="container overflow-scroll w-100 h-100">
+				<div
+					className="container w-100 h-100"
+					style={{ overflowY: "scroll", wordWrap: "break-word" }}
+				>
 					<Switch>
 						<Route exact path="/" component={Home} />
 						<Route exact path="/login" component={Login} />

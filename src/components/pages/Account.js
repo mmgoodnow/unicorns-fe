@@ -7,7 +7,7 @@ export function Account() {
 	return (
 		<>
 			Your Account
-			{JSON.stringify(user)}
+			<pre>{JSON.stringify(user, null, "\t")}</pre>
 		</>
 	);
 }

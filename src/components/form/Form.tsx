@@ -94,15 +94,13 @@ export default class Form extends React.Component<IFormProps, IFormState> {
 				<FormContext.Provider value={{ onChange: this.handleChange }}>
 					{this.props.children}
 				</FormContext.Provider>
-				<div className="form-group">
-					<button
-						type="submit"
-						className="btn btn-basic-unicorn btn-block"
-						disabled={this.hasErrors()}
-					>
-						Submit
-					</button>
-				</div>
+				<button
+					type="submit"
+					className="btn btn-basic-unicorn btn-block"
+					disabled={this.hasErrors()}
+				>
+					Submit
+				</button>
 			</form>
 		);
 	}
