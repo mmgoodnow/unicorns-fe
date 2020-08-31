@@ -12,7 +12,7 @@ import { Navbar } from "./pages/Navbar";
 export function App() {
 	return (
 		<BrowserRouter>
-			<div className="bg-light w-100 h-100">
+			<div className="bg-light w-100 h-100 d-flex flex-column">
 				<Navbar />
 				<div
 					className="container w-100 h-100"
