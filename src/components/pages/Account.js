@@ -6,7 +6,7 @@ export function Account() {
 	const user = useSelector(userSelector);
 	return (
 		<>
-			Your Account
+			<h1>Account</h1>
 			<pre>{JSON.stringify(user, null, "\t")}</pre>
 		</>
 	);
