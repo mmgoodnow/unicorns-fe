@@ -1,11 +1,16 @@
 import * as React from "react";
-
+import { useContext } from "react";
+import { FormContext } from "./FormContext";
+import { partial } from "lodash";
 type Editor = "textbox" | "multilinetextbox" | "dropdown";
+export type FieldEvent = React.FormEvent<
+	HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+>;
 
 export interface IFieldProps {
 	id: string;
 
-	label?: string;
+	label: string;
 
 	editor?: Editor;
 
@@ -16,57 +21,50 @@ export interface IFieldProps {
 	value?: any;
 
 	type?: string;
-
-	handleChange: any;
 }
 
 export const Field: React.FunctionComponent<IFieldProps> = ({
 	id,
 	label,
-	editor,
+	editor = "textbox",
 	options,
 	placeholder,
 	value,
 	type,
-	handleChange,
 }) => {
+	const { onChange } = useContext(FormContext);
+	const handleChange = partial(onChange, id);
 	return (
 		<div className="form-group">
 			{label && <label htmlFor={id}>{label}</label>}
 
-			{editor!.toLowerCase() === "textbox" && (
+			{editor.toLowerCase() === "textbox" && (
 				<input
 					id={id}
 					type={type}
 					placeholder={placeholder}
 					value={value}
-					onChange={(e: React.FormEvent<HTMLInputElement>) =>
-						handleChange(id, e)
-					}
+					onChange={handleChange}
 					className="form-control"
 				/>
 			)}
 
-			{editor!.toLowerCase() === "multilinetextbox" && (
+			{editor.toLowerCase() === "multilinetextbox" && (
 				<textarea
 					id={id}
 					placeholder={placeholder}
 					value={value}
-					onChange={(e: React.FormEvent<HTMLTextAreaElement>) =>
-						handleChange(id, e)
-					}
+					onChange={handleChange}
 					className="form-control"
 				/>
 			)}
 
-			{editor!.toLowerCase() === "dropdown" && (
+			{editor.toLowerCase() === "dropdown" && (
 				<select
 					id={id}
 					value={value}
 					placeholder={placeholder}
-					onChange={(e: React.FormEvent<HTMLSelectElement>) => {
-						handleChange(id, e);
-					}}
+					onChange={handleChange}
 					className="form-control"
 				>
 					{options &&
@@ -81,8 +79,4 @@ export const Field: React.FunctionComponent<IFieldProps> = ({
 			{/*TODO:: display validation error*/}
 		</div>
 	);
-};
-
-Field.defaultProps = {
-	editor: "textbox",
 };

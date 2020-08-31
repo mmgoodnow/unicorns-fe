@@ -1,3 +1,5 @@
+import { User } from "../models/auth";
+
 export const AUTH_STARTED = "AUTH_STARTED";
 export const LOG_IN = "LOG_IN";
 export const LOG_IN_ERROR = "LOG_IN_ERROR";
@@ -9,7 +11,7 @@ export interface GenericAction {
 }
 
 export interface LoginAction extends GenericAction {
-	user: any;
+	user: User;
 }
 
 export type SystemAction = GenericAction | LoginAction;

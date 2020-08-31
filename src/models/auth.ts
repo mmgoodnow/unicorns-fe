@@ -6,3 +6,9 @@ export interface LoginCredentials {
 export interface SignupCredentials extends LoginCredentials {
 	username: string;
 }
+
+export interface User {
+	id: number;
+	username: string;
+	email: string;
+}

@@ -5,7 +5,7 @@ import {
 	LOG_OUT,
 	LoginAction,
 } from "../ActionTypes";
-import { LoginCredentials } from "../../models/auth";
+import { LoginCredentials, User } from "../../models/auth";
 import {
 	getCurrentUser,
 	login as loginRequest,
@@ -17,7 +17,7 @@ function logoutSuccess(): GenericAction {
 	return { type: LOG_OUT };
 }
 
-export function loginSuccess(user: any): LoginAction {
+export function loginSuccess(user: User): LoginAction {
 	return { type: LOG_IN, user };
 }
 
