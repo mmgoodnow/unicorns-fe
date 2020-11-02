@@ -44,12 +44,16 @@ export function logout(): AppThunk {
 export function authenticate(): AppThunk {
 	return (dispatch) => {
 		dispatch(authStarted());
-		getCurrentUser().then(({ logged_in, user }) => {
-			if (!logged_in) {
-				dispatch(logoutSuccess());
-				return;
-			}
-			dispatch(loginSuccess(user));
-		});
+		getCurrentUser()
+			.then(({ logged_in, user }) => {
+				if (!logged_in) {
+					dispatch(logoutSuccess());
+					return;
+				}
+				dispatch(loginSuccess(user));
+			})
+			.catch((error: any) => {
+				return { logged_in: false, user: {} };
+			});
 	};
 }
