@@ -1,9 +1,10 @@
 const API_URL = "http://localhost:9000";
 
 export class HttpError extends Error {
+	statusCode: number;
 	constructor(statusCode: number) {
-		this.statusCode = statusCode;
 		super(`API returned status code ${statusCode}`);
+		this.statusCode = statusCode;
 	}
 }
 
