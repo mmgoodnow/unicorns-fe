@@ -46,14 +46,10 @@ export function authenticate(): AppThunk {
 		dispatch(authStarted());
 		getCurrentUser()
 			.then(({ logged_in, user }) => {
-				if (!logged_in) {
-					dispatch(logoutSuccess());
-					return;
-				}
 				dispatch(loginSuccess(user));
 			})
 			.catch((error) => {
-				return { logged_in: false, user: {} };
+				dispatch(logoutSuccess());
 			});
 	};
 }
