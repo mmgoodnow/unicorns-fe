@@ -52,7 +52,7 @@ export function authenticate(): AppThunk {
 				}
 				dispatch(loginSuccess(user));
 			})
-			.catch((error: any) => {
+			.catch((error) => {
 				return { logged_in: false, user: {} };
 			});
 	};
