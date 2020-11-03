@@ -12,6 +12,7 @@ import {
 	logout as logoutRequest,
 } from "../../api/authApi";
 import { AppThunk } from "../index";
+import { HttpError } from "../../api/http";
 
 function logoutSuccess(): GenericAction {
 	return { type: LOG_OUT };
@@ -48,8 +49,12 @@ export function authenticate(): AppThunk {
 			.then(({ logged_in, user }) => {
 				dispatch(loginSuccess(user));
 			})
-			.catch((error) => {
-				dispatch(logoutSuccess());
+			.catch((error: HttpError) => {
+				if (error.statusCode === 401) {
+					dispatch(logoutSuccess());
+				} else {
+					throw error;
+				}
 			});
 	};
 }
